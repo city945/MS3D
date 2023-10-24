@@ -2,14 +2,14 @@
 **build**
 **egg-info**
 **dist**
-data/
+# data/
 *.pyc
 venv/
 *.idea/
 *.so
 *.pth
 *.pkl
-*.json
+# *.json
 *.zip
 *.bin
 output
