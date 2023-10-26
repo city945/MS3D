@@ -1,0 +1,82 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        // 数据集预处理
+        // python -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos --cfg_file tools/cfgs/dataset_configs/nuscenes_dataset.yaml --version v1.0-trainval
+        // python -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos --cfg_file tools/cfgs/dataset_configs/nuscenes_dataset.yaml --version v1.0-mini
+        {
+          "name": "create_nuscenes_infos",
+          "type": "python",
+          "request": "launch",
+          "module": "pcdet.datasets.nuscenes.nuscenes_dataset",
+          "justMyCode": true,
+          "cwd": "${workspaceFolder}",
+          "args": [
+            "--func", "create_nuscenes_infos",
+            "--cfg_file", "tools/cfgs/dataset_configs/nuscenes_dataset.yaml",
+            "--version", "v1.0-mini"
+          ]
+        },
+        // python -m pcdet.datasets.waymo.waymo_dataset --func create_waymo_infos  --cfg_file tools/cfgs/dataset_configs/waymo_dataset_multiframe.yaml
+        {
+          "name": "create_waymo_infos",
+          "type": "python",
+          "request": "launch",
+          "module": "pcdet.datasets.waymo.waymo_dataset",
+          "justMyCode": true,
+          "cwd": "${workspaceFolder}",
+          "args": [
+            "--func", "create_waymo_infos",
+            "--cfg_file", "tools/cfgs/dataset_configs/waymo_dataset_multiframe.yaml"
+          ]
+        },
+        // python -m pcdet.datasets.lyft.lyft_dataset --func create_lyft_infos --cfg_file tools/cfgs/dataset_configs/lyft_dataset.yaml
+        {
+          "name": "create_lyft_infos",
+          "type": "python",
+          "request": "launch",
+          "module": "pcdet.datasets.lyft.lyft_dataset",
+          "justMyCode": true,
+          "cwd": "${workspaceFolder}",
+          "args": [
+            "--func", "create_lyft_infos",
+            "--cfg_file", "tools/cfgs/dataset_configs/lyft_dataset.yaml"
+          ]
+        },
+        // cd /MS3D/tools && bash cfgs/target_waymo/label_generation/round1/scripts/generate_ensemble_preds.sh
+        // cd /MS3D/tools && bash cfgs/target_waymo/label_generation/round1/scripts/run_ms3d.sh
+
+        
+        // lyft_pt_dets_pv_a.sh
+        {
+          "name": "lyft_pt_dets_pv_a",
+          "type": "python",
+          "request": "launch",
+          "program": "test.py",
+          "justMyCode": true,
+          "cwd": "${workspaceFolder}/tools",
+          "args": [
+            "--cfg_file", "../model_zoo/lyft_pretrained/cfgs/lyft_pv_rcnn_plusplus_resnet_anchorhead_1f_xyz_allcls.yaml",
+            "--ckpt", "../model_zoo/lyft_pretrained/lyft_pv_rcnn_plusplus_resnet_anchorhead_1f_xyz_allcls.pth",
+            "--eval_tag", "lyft1xyz_waymo1xyz_custom190_notta",
+            "--target_dataset", "waymo", "--sweeps", "1", "--use_tta", "0", "--custom_target_scenes",
+            "--set", "DATA_CONFIG_TAR.DATA_SPLIT.test", "train", "DATA_CONFIG_TAR.SAMPLED_INTERVAL.test", "2", "MODEL.POST_PROCESSING.EVAL_METRIC", "none"
+          ]
+        },
+        // python ensemble_kbf.py --ps_cfg /MS3D/tools/cfgs/target_waymo/label_generation/round1/cfgs/ps_config.yaml
+        {
+          "name": "ensemble_kbf",
+          "type": "python",
+          "request": "launch",
+          "program": "ensemble_kbf.py",
+          "justMyCode": true,
+          "cwd": "${workspaceFolder}/tools",
+          "args": [
+            "--ps_cfg", "/MS3D/tools/cfgs/target_waymo/label_generation/round1/cfgs/ps_config.yaml"
+          ]
+        },
+    ]
+  }

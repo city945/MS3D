@@ -15,11 +15,11 @@ venv/
 output
 version.py
 *.pdf
-*.vscode
+# *.vscode
 .ipynb_checkpoints
 docker
 checkpoints
-model_zoo
+# model_zoo
 *.out
 *Trash*
 *.gif

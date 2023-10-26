@@ -2,7 +2,10 @@ import copy
 import pickle
 
 import numpy as np
-import open3d as o3d
+try:
+    import open3d as o3d
+except:
+    pass
 
 from ..dataset import DatasetTemplate
 
